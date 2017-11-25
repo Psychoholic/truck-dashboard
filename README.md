@@ -3,3 +3,4 @@ I needed a way to send pretty large swings of values so I used a 10k pot to do t
 
 This uses an Arduino Nano and a 24 Neopixel ring from Adafruit.  The 220 ohm resistor is just to smooth things out.  
 
+<img src="https://github.com/Psychoholic/truck-dashboard/tachometer.png">
