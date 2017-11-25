@@ -5,4 +5,4 @@ This uses an Arduino Nano and a 24 Neopixel ring from Adafruit.  The 220 ohm res
 
 ![Picture of wiring](https://github.com/Psychoholic/truck-dashboard/blob/master/tachometer.png)
 
-[https://www.youtube.com/watch?v=eYhN7ajolcE]
+[https://www.youtube.com/watch?v=eYhN7ajolcE](https://www.youtube.com/watch?v=eYhN7ajolcE)
