@@ -7,6 +7,6 @@ I needed a way to send pretty large swings of values so I used a 10k pot to do t
 This uses an Arduino Nano and a 24 Neopixel ring from Adafruit.  The 220 ohm resistor is just to smooth things out. 
 The OLED is from diymall.com and is a 128x64 using their SSD1306 driver and not the one from Adafruit.k
 
-![Picture of wiring](https://github.com/Psychoholic/truck-dashboard/blob/master/tachometer.png)
+![Picture of wiring](https://github.com/Psychoholic/truck-dashboard/blob/master/tachometer_bb.png)
 
 [https://www.youtube.com/watch?v=eYhN7ajolcE](https://www.youtube.com/watch?v=eYhN7ajolcE)
