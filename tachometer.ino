@@ -4,8 +4,8 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-#define LEDPIN 2 
-#define NUMBER_PIXELS 24 
+#define LEDPIN 2
+#define NUMBER_PIXELS 24
 
 #define OLED_RESET 4
 Adafruit_SSD1306 display(OLED_RESET);
@@ -16,62 +16,62 @@ Adafruit_SSD1306 display(OLED_RESET);
 #define DELTAY 2
 
 
-#define LOGO16_GLCD_HEIGHT 16 
-#define LOGO16_GLCD_WIDTH  16 
+#define LOGO16_GLCD_HEIGHT 16
+#define LOGO16_GLCD_WIDTH  16
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMBER_PIXELS, LEDPIN, NEO_GRB + NEO_KHZ800);
 
 int potPin = 2;
 int val;
 int tach = 0;
-int curPos=0;
-int pixelnum=0;
+int curPos = 0;
+int pixelnum = 0;
 
 
 void setup() {
   strip.begin();
   Serial.begin(19200);
-   display.begin(SSD1306_SWITCHCAPVCC, 0x3C); 
-     display.setTextSize(4);
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+  display.setTextSize(4);
 
-     
- 
+
+
 }
 
 void loop() {
- val = analogRead(potPin);
- tach = val * 10;
- pixelnum = tach / 415;
- displayTach(pixelnum);
+  val = analogRead(potPin);
+  tach = val * 10;
+  pixelnum = tach / 415; //This is a test value since there are 24 LEDs and the swing from the pot is 10k it gave me a good way to display
+  displayTach(pixelnum);
 
- display.setCursor(20,20);
-   display.setTextColor(WHITE);
+  display.setCursor(20, 20);
+  display.setTextColor(WHITE);
   display.clearDisplay();
   display.println(tach);
   display.display();
 
 }
 
-void displayTach( int pixelnum){
-  
-if(pixelnum > curPos) {
-  
-  if (pixelnum > 19){
+void displayTach( int pixelnum) {
+
+  if (pixelnum > curPos) {
+
+    if (pixelnum > 19) {
       strip.setPixelColor(curPos, 16, 0, 0);
-  } else if (pixelnum >14) {
-    strip.setPixelColor(curPos, 16, 16, 0);
+    } else if (pixelnum > 14) {
+      strip.setPixelColor(curPos, 16, 16, 0);
+    } else {
+      strip.setPixelColor(curPos, 0, 16, 0);
+    }
+    strip.show();
+    curPos++;
+
   } else {
-    strip.setPixelColor(curPos, 0, 16, 0);
+    strip.setPixelColor(curPos, 0);
+    strip.show();
+    --curPos;
   }
-      strip.show();
-      curPos++;
-      
-} else {
-   strip.setPixelColor(curPos, 0);
-      strip.show();
-      --curPos;
 }
-  }
 
 
 
