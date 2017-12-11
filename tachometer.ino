@@ -15,6 +15,7 @@ Adafruit_SSD1306 display(OLED_RESET);
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMBER_PIXELS, LEDPIN, NEO_GRB + NEO_KHZ800);
 
 int potPin = 2;
+int dimmerPin = 1;
 int val;
 int tach = 0;
 int curPos = 0;
@@ -23,19 +24,27 @@ int x = 1;
 int rpmperpixel = round(MAXRPM / NUMBER_PIXELS);
 int redline = NUMBER_PIXELS * .9; //90% of the total rpm
 int yellowline = NUMBER_PIXELS * .7;  //I figured 70% was a good shift point
+int brightval = 1;
+int brightness;
 
 void setup() {
   strip.begin();
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   display.setTextSize(4);
   display.setTextColor(WHITE);
-  strip.setBrightness(16);  // 0 - 255 these things are mega bright so I'd be gentle here
+ 
+  Serial.begin(19200);
+ 
 
   
 }
 
 void loop() {
   val = analogRead(potPin);
+  brightval = analogRead(dimmerPin);
+  brightness = round(brightval / 4);
+  
+   Serial.println(brightness);
   tach = val * 10;
   pixelnum = tach / rpmperpixel; 
   
@@ -58,11 +67,11 @@ void displayTach( int pixelnum) {
   if (pixelnum > curPos) {
 
     if (pixelnum > redline) {
-      strip.setPixelColor(curPos, 16 , 0, 0);
+      strip.setPixelColor(curPos,  brightness , 0, 0);
     } else if (pixelnum > yellowline) {
-      strip.setPixelColor(curPos, 16, 16, 0);
+      strip.setPixelColor(curPos,  brightness,  brightness, 0);
     } else {
-      strip.setPixelColor(curPos,  0, 16, 0);
+      strip.setPixelColor(curPos,  0,  brightness, 0);
     }
     strip.show();
     curPos++;
