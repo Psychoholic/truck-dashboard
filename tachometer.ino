@@ -5,7 +5,7 @@
 
 #define LEDPIN 2
 #define NUMBER_PIXELS 24
-#define MAXRPM 5000
+#define MAXRPM 5000  //it's an old big block Ford, I wouldn't go over this unless you want to be sweeping up parts
 
 #define OLED_RESET 4
 Adafruit_SSD1306 display(OLED_RESET);
