@@ -5,7 +5,9 @@
 
 #define LEDPIN 2
 #define NUMBER_PIXELS 24
+
 #define MAXRPM 5000  //it's an old big block Ford, I wouldn't go over this unless you want to be sweeping up parts
+
 
 #define OLED_RESET 4
 Adafruit_SSD1306 display(OLED_RESET);
@@ -22,13 +24,12 @@ int rpmperpixel = round(MAXRPM / NUMBER_PIXELS);
 int redline = NUMBER_PIXELS * .9; //90% of the total rpm
 int yellowline = NUMBER_PIXELS * .7;  //I figured 70% was a good shift point
 
-
 void setup() {
   strip.begin();
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   display.setTextSize(4);
   display.setTextColor(WHITE);
-
+  strip.setBrightness(16);  // 0 - 255 these things are mega bright so I'd be gentle here
 
   
 }
@@ -57,11 +58,11 @@ void displayTach( int pixelnum) {
   if (pixelnum > curPos) {
 
     if (pixelnum > redline) {
-      strip.setPixelColor(curPos, 16, 0, 0);
+      strip.setPixelColor(curPos, 16 , 0, 0);
     } else if (pixelnum > yellowline) {
       strip.setPixelColor(curPos, 16, 16, 0);
     } else {
-      strip.setPixelColor(curPos, 0, 16, 0);
+      strip.setPixelColor(curPos,  0, 16, 0);
     }
     strip.show();
     curPos++;
