@@ -33,18 +33,12 @@ void setup() {
   display.setTextSize(4);
   display.setTextColor(WHITE);
  
-  Serial.begin(19200);
- 
-
-  
 }
 
 void loop() {
   val = analogRead(potPin);
   brightval = analogRead(dimmerPin);
-  brightness = round(brightval / 4);
-  
-   Serial.println(brightness);
+  brightness = round(brightval / 4); // using a 10k pot, it only impacts LEDs that aren't already lit
   tach = val * 10;
   pixelnum = tach / rpmperpixel; 
   
