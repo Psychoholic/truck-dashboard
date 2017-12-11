@@ -5,6 +5,7 @@
 
 #define LEDPIN 2
 #define NUMBER_PIXELS 24
+#define MAXRPM 5000
 
 #define OLED_RESET 4
 Adafruit_SSD1306 display(OLED_RESET);
@@ -17,6 +18,9 @@ int tach = 0;
 int curPos = 0;
 int pixelnum = 0;
 int x = 1;
+int rpmperpixel = round(MAXRPM / NUMBER_PIXELS);
+int redline = NUMBER_PIXELS * .9; //90% of the total rpm
+int yellowline = NUMBER_PIXELS * .7;  //I figured 70% was a good shift point
 
 
 void setup() {
@@ -24,7 +28,7 @@ void setup() {
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   display.setTextSize(4);
   display.setTextColor(WHITE);
-  Serial.begin(19200);
+
 
   
 }
@@ -32,9 +36,12 @@ void setup() {
 void loop() {
   val = analogRead(potPin);
   tach = val * 10;
-  pixelnum = tach / 415; //This is a test value since there are 24 LEDs and the swing from the pot is 10k it gave me a good way to display
+  pixelnum = tach / rpmperpixel; 
   
-  if ( x < 50 ){
+  //this next little bit is here because the speed of the OLED display was making the LEDs slow
+  //updating the display every 50 cycles seems to be a pretty good sweet spot
+  
+  if ( x < 50 ){ 
     displayTach(pixelnum);
     x++;
   } else {
@@ -46,11 +53,12 @@ void loop() {
 
 void displayTach( int pixelnum) {
 
+
   if (pixelnum > curPos) {
 
-    if (pixelnum > 19) {
+    if (pixelnum > redline) {
       strip.setPixelColor(curPos, 16, 0, 0);
-    } else if (pixelnum > 14) {
+    } else if (pixelnum > yellowline) {
       strip.setPixelColor(curPos, 16, 16, 0);
     } else {
       strip.setPixelColor(curPos, 0, 16, 0);
